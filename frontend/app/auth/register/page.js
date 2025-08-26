@@ -37,7 +37,7 @@ export default function SignupPage() {
 
     try {
       const response = await dispatch(registerUser(form));
-      // backend se payload
+      
       if (response?.payload) {
         console.log("Registration successful:", response.payload);
         setForm({ name: "", email: "", password: "" });
@@ -51,9 +51,12 @@ export default function SignupPage() {
   };
 
   const handleGoogleSignup = () => {
-    console.log("Google signup clicked");
-    // backend Google OAuth integration placeholder
-  };
+  console.log("Google signup clicked");
+  const googleAuthUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/auth/google`;
+  console.log("👉 Redirecting to:", googleAuthUrl);
+  window.location.href = googleAuthUrl;
+};
+
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">

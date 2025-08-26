@@ -83,7 +83,7 @@ const logout = async (req, res, next) => {
       maxAge: 0,
       httpOnly: true
     };
-    res.cookie("token", null, cookieOption);  // token delete
+    res.cookie("token", null, cookieOption); 
     console.log("user logged out");
     res.status(200).json({
       success: true,
@@ -97,7 +97,7 @@ const logout = async (req, res, next) => {
 
 const getProfile = async (req, res, next) => {
   console.log("Incoming getProfile request");
-  const userId = req.user.id;   // token se user.id aa rha hai
+  const userId = req.user.id;   
   console.log("User ID from token:", userId);
 
   try {
@@ -180,7 +180,7 @@ const updateProfile = async (req, res, next) => {
         gravity: "faces",
         crop: "fill",
         resource_type: "auto",
-        timeout: 120000, // 2 minutes
+        timeout: 120000, 
       });
 
       console.log(" Cloudinary upload success:", result.secure_url);
@@ -190,7 +190,7 @@ const updateProfile = async (req, res, next) => {
         secure_url: result.secure_url,
       };
 
-      // local temp file delete
+      
       await fs.promises.rm(req.file.path);
     }
 

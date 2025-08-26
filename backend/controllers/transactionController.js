@@ -2,7 +2,7 @@ import Transaction from "../models/Transaction.js";
 import Account from "../models/Account.js";
 import AppError from "../utils/error.utils.js";
 
-// GET all transactions
+
 export const getTransactions = async (req, res,next) => {
   try {
     const transactions = await Transaction.find();
@@ -15,7 +15,7 @@ export const getTransactions = async (req, res,next) => {
   }
 };
 
-// POST create transaction
+
 export const createTransaction = async (req, res,next) => {
   try {
     const newTransaction = new Transaction(req.body);
@@ -46,7 +46,7 @@ export  const getTransactionById = async (req,res,next) => {
   }
 }
 
-// PUT update transaction
+
 export const updateTransaction = async (req, res,next) => {
   try {
     const updated = await Transaction.findByIdAndUpdate(
@@ -60,7 +60,7 @@ export const updateTransaction = async (req, res,next) => {
   }
 };
 
-// DELETE transaction
+
 export const deleteTransaction = async (req, res,next) => {
   try {
     await Transaction.findByIdAndDelete(req.params.id);
@@ -70,10 +70,7 @@ export const deleteTransaction = async (req, res,next) => {
   }
 };
 
-// GET summary
 
-
-// GET summary
 export const getSummary = async (req, res) => {
   try {
     const accounts = await Account.find();

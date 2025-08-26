@@ -1,71 +1,123 @@
 "use client";
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAccountById } from "@/redux/slice/accountSlice";
-import { useParams } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addAccount, getAccounts } from "@/redux/slice/accountSlice";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-export default function AccountDetailPage() {
-  const { id } = useParams();
+export default function AddAccountModal() {
   const dispatch = useDispatch();
-  const { selectedAccount } = useSelector((state) => state.accounts);
+  const [form, setForm] = useState({
+    accountType: "",
+    bankName: "",
+    branchName: "",
+    accountNumber: "",
+    balance: "",
+  });
 
-  useEffect(() => {
-    if (id) dispatch(getAccountById(id));
-  }, [id, dispatch]);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  if (!selectedAccount) return <p>Loading...</p>;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(addAccount(form));
+    dispatch(getAccounts());
+    setForm({
+      accountType: "",
+      bankName: "",
+      branchName: "",
+      accountNumber: "",
+      balance: "",
+    });
+  };
 
   return (
-    <div className="p-6 space-y-6">
-      <h2 className="text-xl font-semibold">Account Details</h2>
-      <Card>
-        <CardHeader>
-          <CardTitle>{selectedAccount.bankName}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>Account Type: {selectedAccount.accountType}</p>
-          <p>Branch: {selectedAccount.branchName}</p>
-          <p>Account Number: {selectedAccount.accountNumber}</p>
-          <p className="font-bold">Balance: ${selectedAccount.balance}</p>
-          <div className="mt-4 flex gap-2">
-            <Button>Edit Details</Button>
-            <Button variant="destructive">Remove</Button>
-          </div>
-        </CardContent>
-      </Card>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="w-full">+ Add Account</Button>
+      </DialogTrigger>
 
-      <h3 className="text-lg font-semibold">Transactions History</h3>
-      <Card>
-        <CardContent>
-          <table className="w-full text-left">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Receipt</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Example static transactions */}
-              <tr>
-                <td>17 Apr, 2023</td>
-                <td>Complete</td>
-                <td>Credit</td>
-                <td>8C52d5DKDJ5</td>
-                <td>$160.00</td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="mt-4 flex justify-center">
-            <Button>Load More</Button>
+      <DialogContent>
+        <DialogHeader>
+          
+          <DialogTitle>Add New Account</DialogTitle>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label htmlFor="accountType">Account Type</Label>
+            <Input
+              id="accountType"
+              name="accountType"
+              value={form.accountType}
+              onChange={handleChange}
+              placeholder="savings / checking / credit"
+              required
+            />
           </div>
-        </CardContent>
-      </Card>
-    </div>
+
+          <div>
+            <Label htmlFor="bankName">Bank Name</Label>
+            <Input
+              id="bankName"
+              name="bankName"
+              value={form.bankName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="branchName">Branch Name</Label>
+            <Input
+              id="branchName"
+              name="branchName"
+              value={form.branchName}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="accountNumber">Account Number</Label>
+            <Input
+              id="accountNumber"
+              name="accountNumber"
+              value={form.accountNumber}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="balance">Balance</Label>
+            <Input
+              id="balance"
+              type="number"
+              name="balance"
+              value={form.balance}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <DialogFooter>
+            <Button type="submit" className="w-full">
+              Save Account
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
