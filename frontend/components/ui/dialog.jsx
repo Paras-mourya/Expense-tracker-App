@@ -14,7 +14,7 @@ export const DialogContent = React.forwardRef(({ className, children, ...props }
         bg-white rounded-lg shadow-lg p-6 ${className}`}
       {...props}
     >
-      {/* 👇 Agar DialogTitle na diya ho toh VisuallyHidden add kar dete hain */}
+     
       <DialogPrimitive.Title className="sr-only">Dialog</DialogPrimitive.Title>
 
       {children}

@@ -6,7 +6,7 @@ import Bill from "./models/Bill.js";
 dotenv.config();
 
 await mongoose.connect(process.env.MONGO_URI);
-console.log("✅ MongoDB Connected");
+console.log(" MongoDB Connected");
 
 try {
   await Bill.deleteMany();

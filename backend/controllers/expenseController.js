@@ -21,7 +21,7 @@ export const getExpensesComparison = async (req, res, next) => {
       },
     ]);
 
-    console.log("📌 Aggregated Expenses:", expenses);
+    console.log(" Aggregated Expenses:", expenses);
 
     
     const result = Array.from({ length: 12 }, (_, i) => {

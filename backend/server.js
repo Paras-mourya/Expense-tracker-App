@@ -21,7 +21,7 @@ const allowedOrigins = [
 const vercelRegex = /^https:\/\/.*\.vercel\.app$/;
 
 app.use((req, res, next) => {
-  console.log("👉 Incoming request:");
+  console.log(" Incoming request:");
   console.log("   Origin:", req.headers.origin);
   console.log("   Path:", req.path);
   next();

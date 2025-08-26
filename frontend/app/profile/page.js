@@ -36,21 +36,21 @@ export default function ProfileCard() {
       
       <CardContent className="p-6 grid grid-cols-2 gap-6">
         <div className="flex flex-col items-center p-4 bg-gray-50 rounded-xl shadow-sm">
-          <span className="text-sm text-gray-500">📞 Phone</span>
+          <span className="text-sm text-gray-500">Phone</span>
           <p className="text-base font-medium text-gray-800 mt-1">
             {user.phone || "Not added"}
           </p>
         </div>
 
         <div className="flex flex-col items-center p-4 bg-gray-50 rounded-xl shadow-sm">
-          <span className="text-sm text-gray-500">📅 Joined</span>
+          <span className="text-sm text-gray-500">Joined</span>
           <p className="text-base font-medium text-gray-800 mt-1">
             {new Date(user.createdAt).toLocaleDateString()}
           </p>
         </div>
 
         <div className="flex flex-col items-center p-4 bg-gray-50 rounded-xl shadow-sm col-span-2">
-          <span className="text-sm text-gray-500">🌐 Role</span>
+          <span className="text-sm text-gray-500">Role</span>
           <p className="text-base font-medium text-gray-800 mt-1">
             {user.role || "Customer"}
           </p>
