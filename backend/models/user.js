@@ -14,9 +14,16 @@ const userSchema = new Schema({
     required: true,
   },
   password: {
-    type: String,
-    required: true,
+  type: String,
+  required: function() {
+    return !this.isGoogleUser; 
   },
+},
+isGoogleUser: {
+  type: Boolean,
+  default: false,
+}
+,
   avatar: {
     public_id: {
       type: String,
@@ -63,7 +70,7 @@ userSchema.methods.generatePasswordResetToken = async function () {
     .update(resetToken)
     .digest("hex");
 
-  this.forgotPasswordExpiry = Date.now() + 15 * 60 * 1000; // 15 min
+  this.forgotPasswordExpiry = Date.now() + 15 * 60 * 1000;
 
   return resetToken;
 };
